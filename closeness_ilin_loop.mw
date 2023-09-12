@@ -122,55 +122,53 @@
 </Group>
 <Group hide-input="false" labelreference="L2357" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for R1 in [100,1.1,2,2.5,3] do
- R2:=1;
- t1:=R1;
- t2:=R2;
- Q:=6.61e-4;
- t12:=R1/R2;
- eps:=t1/t2-1;
- epsilon:=eps;
- S1:=sqrt(R1*Q*w*I):;
- S:=S1:;
- S2:=sqrt(R2*Q*w*I):;
- kk1:=-2*I*(t12*S2/(t12-1)):;
- kk2:=-2*I*(S1/(t12-1)):;
- freq_high:=5;
- freq_low:=1/(100*2*Pi*R1*Q):;
+ for R2 in [1] do
+    t1:=R1;
+    t2:=R2;
+    Q:=6.61e-4;
+    t12:=R1/R2;
+    eps:=t1/t2-1;
+    epsilon:=eps;
+    S1:=sqrt(R1*Q*w*I):;
+    S:=S1:;
+    S2:=sqrt(R2*Q*w*I):;
+    kk1:=-2*I*(t12*S2/(t12-1)):;
+    kk2:=-2*I*(S1/(t12-1)):;
+    freq_high:=5;
+    freq_low:=1/(100*2*Pi*R1*Q):;
+    
+    fname:=cat(&quot;R1_by_R2 (&quot;,R1,&quot; by &quot;,R2,&quot;).xlsx&quot;);
+   
+    Z_ilin:=-(2*R1*I/S1)*(((BesselY(1,kk1)*BesselJ(0,kk2))-(BesselJ(1,kk1)*BesselY(0,kk2)))/((BesselJ(1,kk1)*BesselY(1,kk2))-(BesselY(1,kk1)*BesselJ(1,kk2)))):;
+    Z:=subs(w=2*Pi*10^i,Z_ilin):;
+    ZZ:=evalf(seq(Z,i=freq_low..freq_high,0.1)):;
+    ZZ_real:=[seq(Re(z),z in ZZ)]:;
+    ZZ_imag:=[seq(Im(z),z in ZZ)]:;
+    
+    Export(ZZ_real,fname,&quot;ilin&quot;,&quot;A1&quot;);
+    Export(ZZ_imag,fname,&quot;ilin&quot;,&quot;A2&quot;);
+   
+   
+    Z_ilin_pert:=-2*R1*(exp(2*S)+1)^2/((epsilon*(S^2+1/2)*exp(2*S)+(-S-(1/4)*epsilon)*exp(4*S)+S-(1/4)*epsilon)):;
+    Z:=subs(w=2*Pi*10^i,Z_ilin_pert):;
+    ZZ:=evalf(seq(Z,i=freq_low..freq_high,0.1)):;
+    ZZ_real:=[seq(Re(z),z in ZZ)]:;
+    ZZ_imag:=[seq(Im(z),z in ZZ)]:;
+   
+    Export(ZZ_real,fname,&quot;ilin_pert&quot;,&quot;A1&quot;);
+    Export(ZZ_imag,fname,&quot;ilin_pert&quot;,&quot;A2&quot;);
+   
+   
+    Z_ilin_pert_2:=2*R1*4*(exp(4*S)+2*exp(2*S)+1)*(exp(2*S)+1)*S/((((S^4+2*S^3+2*S^2+3/2*S+9/8)*eps^2+(-4*S^3-S)*eps-4*S^2)*exp(2*S)+((-S^4+2*S^3-2*S^2+3/2*S-9/8)*eps^2+(-4*S^3-S)*eps+4*S^2)*exp(4*S)+(-(1/8)*eps^2+S*eps+4*S^2)*exp(6*S)-4*S^2+S*eps+(1/8)*eps^2)):;
+    Z:=subs(w=2*Pi*10^i,Z_ilin_pert_2):;
+    ZZ:=evalf(seq(Z,i=freq_low..freq_high,0.1)):;
+    ZZ_real:=[seq(Re(z),z in ZZ)]:;
+    ZZ_imag:=[seq(Im(z),z in ZZ)]:;
+   
+    Export(ZZ_real,fname,&quot;ilin_pert_2&quot;,&quot;A1&quot;);
+    Export(ZZ_imag,fname,&quot;ilin_pert_2&quot;,&quot;A2&quot;);
  
- fname:=cat(&quot;R1_by_R2 (&quot;,R1,&quot; by &quot;,R2,&quot;).xlsx&quot;);
-
- Z_ilin:=-(2*R1*I/S1)*(((BesselY(1,kk1)*BesselJ(0,kk2))-(BesselJ(1,kk1)*BesselY(0,kk2)))/((BesselJ(1,kk1)*BesselY(1,kk2))-(BesselY(1,kk1)*BesselJ(1,kk2)))):;
- Z:=subs(w=2*Pi*10^i,Z_ilin):;
- ZZ:=evalf(seq(Z,i=freq_low..freq_high,0.1)):;
- ZZ_real:=[seq(Re(z),z in ZZ)]:;
- ZZ_imag:=[seq(Im(z),z in ZZ)]:;
- 
- Export(ZZ_real,fname,&quot;ilin&quot;,&quot;A1&quot;);
- Export(ZZ_imag,fname,&quot;ilin&quot;,&quot;A2&quot;);
-
-
- Z_ilin_pert:=-2*R1*(exp(2*S)+1)^2/((epsilon*(S^2+1/2)*exp(2*S)+(-S-(1/4)*epsilon)*exp(4*S)+S-(1/4)*epsilon)):;
- Z:=subs(w=2*Pi*10^i,Z_ilin_pert):;
- ZZ:=evalf(seq(Z,i=freq_low..freq_high,0.1)):;
- ZZ_real:=[seq(Re(z),z in ZZ)]:;
- ZZ_imag:=[seq(Im(z),z in ZZ)]:;
-
- Export(ZZ_real,fname,&quot;ilin_pert&quot;,&quot;A1&quot;);
- Export(ZZ_imag,fname,&quot;ilin_pert&quot;,&quot;A2&quot;);
-
-
- Z_ilin_pert_2:=2*R1*4*(exp(4*S)+2*exp(2*S)+1)*(exp(2*S)+1)*S/((((S^4+2*S^3+2*S^2+3/2*S+9/8)*eps^2+(-4*S^3-S)*eps-4*S^2)*exp(2*S)+((-S^4+2*S^3-2*S^2+3/2*S-9/8)*eps^2+(-4*S^3-S)*eps+4*S^2)*exp(4*S)+(-(1/8)*eps^2+S*eps+4*S^2)*exp(6*S)-4*S^2+S*eps+(1/8)*eps^2)):;
- Z:=subs(w=2*Pi*10^i,Z_ilin_pert_2):;
- ZZ:=evalf(seq(Z,i=freq_low..freq_high,0.1)):;
- ZZ_real:=[seq(Re(z),z in ZZ)]:;
- ZZ_imag:=[seq(Im(z),z in ZZ)]:;
-
- Export(ZZ_real,fname,&quot;ilin_pert_2&quot;,&quot;A1&quot;);
- Export(ZZ_imag,fname,&quot;ilin_pert_2&quot;,&quot;A2&quot;);
- 
- 
-
- 
+end do:
 end do:</Text-field>
 </Input>
 <Input><Text-field prompt="&gt; " style="Maple Input" spaceabove="0" linebreak="space" rightmargin="0" linespacing="0.0" initial="0" firstindent="0" leftmargin="0" bulletsuffix="" alignment="left" bullet="none" spacebelow="0" pagebreak-before="false"></Text-field>
@@ -179,16 +177,6 @@ end do:</Text-field>
 <Group hide-input="false" labelreference="L2409" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
 </Input>
-</Group>
-<Group labelreference="L2410" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">?for</Text-field>
-</Input>
-</Group>
-<Group hide-input="false" labelreference="L2411" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">R1</Text-field>
-</Input>
-<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkjbW5HNiMvSSttb2R1bGVuYW1lRzYiSSxUeXBlc2V0dGluZ0dJKF9zeXNsaWJHRic2JFEiM0YnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJw==">IiIk</Equation></Text-field>
-</Output>
 </Group>
 <Group labelreference="L2412" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
 <Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
