@@ -1,6 +1,45 @@
-
-
-
-
-
--(np.exp(2*S)+1)**2*d/(k1*(eps*(S**2+1/2)*np.exp(2*S)+(-S-(1/4)*eps)*np.exp(4*S)+S-(1/4)*eps))
+ R1:=1;
+ R2:=1;
+ t1:=R1;
+ t2:=R2;
+ Q:=6.61e-4;
+ t12:=R1/R2;
+ eps:=t1/t2-1;
+ epsilon:=eps;
+ S1:=sqrt(R1*Q*w*I):;
+ S:=S1:;
+ S2:=sqrt(R2*Q*w*I):;
+ kk1:=-2*I*(t12*S2/(t12-1)):;
+ kk2:=-2*I*(S1/(t12-1)):;
+ x_lim:=300;
+ y_lim:=300;
+ freq_high:=5;
+ freq_low:=1/(100*2*Pi*R1*Q):;
+ with(plots):;
+ fname:=cat("R1_by_R2 (",R1," by ",R2,").xlsx");
+ Z_ilin:=-(2*R1*I/S1)*(((BesselY(1,kk1)*BesselJ(0,kk2))-(BesselJ(1,kk1)*BesselY(0,kk2)))/((BesselJ(1,kk1)*BesselY(1,kk2))-(BesselY(1,kk1)*BesselJ(1,kk2)))):;
+ Z:=subs(w=2*Pi*10^i,Z_ilin):;
+ ZZ:=evalf(seq(Z,i=freq_low..freq_high,0.1)):;
+ ZZ_real:=[seq(Re(z),z in ZZ)]:;
+ ZZ_imag:=[seq(Im(z),z in ZZ)]:;
+ with(ExcelTools):;
+ Export(ZZ_real,fname,"ilin","A1");
+ Export(ZZ_imag,fname,"ilin","A2");
+ p_ilin:=plot(ZZ_real,-ZZ_imag,color=red,legend="lin",view=[0..x_lim,0..y_lim]):;
+ Z_ilin_pert:=-2*R1*(exp(2*S)+1)^2/((epsilon*(S^2+1/2)*exp(2*S)+(-S-(1/4)*epsilon)*exp(4*S)+S-(1/4)*epsilon)):;
+ Z:=subs(w=2*Pi*10^i,Z_ilin_pert):;
+ ZZ:=evalf(seq(Z,i=freq_low..freq_high,0.1)):;
+ ZZ_real:=[seq(Re(z),z in ZZ)]:;
+ ZZ_imag:=[seq(Im(z),z in ZZ)]:;
+ p_ilin_pert:=plot(ZZ_real,-ZZ_imag,color=blue,legend="lin_pert",view=[0..x_lim,0..y_lim]):;
+ Export(ZZ_real,fname,"ilin_pert","A1");
+ Export(ZZ_imag,fname,"ilin_pert","A2");
+ Z_ilin_pert_2:=2*R1*4*(exp(4*S)+2*exp(2*S)+1)*(exp(2*S)+1)*S/((((S^4+2*S^3+2*S^2+3/2*S+9/8)*eps^2+(-4*S^3-S)*eps-4*S^2)*exp(2*S)+((-S^4+2*S^3-2*S^2+3/2*S-9/8)*eps^2+(-4*S^3-S)*eps+4*S^2)*exp(4*S)+(-(1/8)*eps^2+S*eps+4*S^2)*exp(6*S)-4*S^2+S*eps+(1/8)*eps^2)):;
+ Z:=subs(w=2*Pi*10^i,Z_ilin_pert_2):;
+ ZZ:=evalf(seq(Z,i=freq_low..freq_high,0.1)):;
+ ZZ_real:=[seq(Re(z),z in ZZ)]:;
+ ZZ_imag:=[seq(Im(z),z in ZZ)]:;
+ p_ilin_pert_2:=plot(ZZ_real,-ZZ_imag,color=pink,legend="ilin_pert_2",view=[0..x_lim,0..y_lim]):;
+ Export(ZZ_real,fname,"ilin_pert_2","A1");
+ Export(ZZ_imag,fname,"ilin_pert_2","A2");
+ 
