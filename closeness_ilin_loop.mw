@@ -121,7 +121,7 @@
 </Output>
 </Group>
 <Group hide-input="false" labelreference="L2357" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
-<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for R1 in [100,1.1,2,2.5,3] do
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">for R1 in [1.1] do
  for R2 in [1] do
     t1:=R1;
     t2:=R2;
