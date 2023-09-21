@@ -1,0 +1,5 @@
+############## BUCKET ##########
+
+big sd values: https://stackoverflow.com/questions/56620767/scipy-optimize-curve-fit-reuturns-huge-standard-deviation-covariance
+
+
