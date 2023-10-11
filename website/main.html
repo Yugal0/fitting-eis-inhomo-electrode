@@ -99,6 +99,7 @@
             </form>
             
             <!-- Additional form within the left-section -->
+            <div id="hot-container"></div>
             <div class="additional-form">
                 <h1>Additional Input</h1>
                 <form id="additionalInputForm">
@@ -129,7 +130,7 @@
             <canvas id="besselPlot"></canvas>
             
             <!-- Handsontable element -->
-            <div id="hot-container"></div>
+            
 	
         </div>
     </div>
@@ -159,10 +160,11 @@
         // Initialize Handsontable
         const container = document.getElementById('hot-container');
         const hot = new Handsontable(container, {
-            data: generateRandomData(5, 5), // 5 rows and 5 columns with random values
+            data: generateRandomData(100, 3), // 5 rows and 5 columns with random values
             rowHeaders: true,
             colHeaders: true,
             contextMenu: true,
+            licenseKey: 'non-commercial-and-evaluation'
         });
  
     </script>
