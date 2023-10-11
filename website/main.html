@@ -78,53 +78,13 @@
 <body>
     <div class="container">
         <div class="left-section">
-            <h1>Input</h1>
-            <form id="inputForm">
-                <table>
-                    <tr>
-                        <th>Variable</th>
-                        <th>Value</th>
-                    </tr>
-                    <tr>
-                        <td>Real Part (zr):</td>
-                        <td><input type="text" id="zr" name="zr"></td>
-                    </tr>
-                    <tr>
-                        <td>Imaginary Part (zi):</td>
-                        <td><input type="text" id="zi" name="zi"></td>
-                    </tr>
-                </table>
-                <br>
-                <input type="submit" value="Submit">
-            </form>
-            
-            <!-- Additional form within the left-section -->
+            <!-- Handsontable container -->
             <div id="hot-container"></div>
-            <div class="additional-form">
-                <h1>Additional Input</h1>
-                <form id="additionalInputForm">
-                    <table>
-                        <tr>
-                            <th>Variable</th>
-                            <th>Value</th>
-                        </tr>
-                        <tr>
-                            <td>R Guess:</td>
-                            <td><input type="text" id="Rguess" name="Rguess"></td>
-                        </tr>
-                        <tr>
-                            <td>Delta Guess:</td>
-                            <td><input type="text" id="deltaguess" name="deltaguess"></td>
-                        </tr>
-                    </table>
-                    <br>
-                    <input type="submit" value="Submit" onclick="submitAdditionalForm()">
-                </form>
-            </div>
         </div>
         <div class="right-section">
             <h1>Output</h1>
             <canvas id="linePlot"></canvas>
+            <button onclick="updatePlotButtonClicked()">Update Plot</button>
             
             <!-- Second plot for Bessel function -->
             <canvas id="besselPlot"></canvas>
@@ -196,13 +156,9 @@
             });
         }
 
-        // Initial plot when the page loads
-        updateLinePlot();
-
-        // Function to handle the additional form submit
-        function submitAdditionalForm() {
-            // You can add logic to handle the form data here
-            updateLinePlot(); // Update the line plot when the form is submitted
+        // Function to handle the button click to update the plot
+        function updatePlotButtonClicked() {
+            updateLinePlot(); // Update the line plot based on the data in the Handsontable
         }
     </script>
 </body>
