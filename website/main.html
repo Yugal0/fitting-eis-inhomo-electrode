@@ -69,7 +69,7 @@
         }
 
         /* Adjust the size of the Handsontable container */
-        #handsontable-container {
+        #hot-container {
             width: 100%;
             height: 200px; /* Adjust the height as needed */
         }
@@ -118,7 +118,7 @@
                         </tr>
                     </table>
                     <br>
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Submit" onclick="submitAdditionalForm()">
                 </form>
             </div>
         </div>
@@ -128,10 +128,6 @@
             
             <!-- Second plot for Bessel function -->
             <canvas id="besselPlot"></canvas>
-            
-            <!-- Handsontable element -->
-            
-	
         </div>
     </div>
 
@@ -139,17 +135,21 @@
     <script src="https://cdn.jsdelivr.net/npm/handsontable@9.0.0/dist/handsontable.full.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // JavaScript code to create the line plot with random data
-        // (Remaining JavaScript code for plots here)
+        // JavaScript code to create the line plot
+        const container = document.getElementById('hot-container');
+        const hot = new Handsontable(container, {
+            data: generateRandomData(100, 2), // 100 rows and 2 columns with random values
+            rowHeaders: true,
+            colHeaders: true,
+            contextMenu: true,
+            licenseKey: 'non-commercial-and-evaluation'
+        });
 
-        // Initialize Handsontable with random data
-    
-            // Generate some random data for the table
-            function generateRandomData(rows, columns) {
-              const data = [];
-              for (let i = 0; i < rows; i++) {
+        function generateRandomData(rows, columns) {
+            const data = [];
+            for (let i = 0; i < rows; i++) {
                 const row = [];
-                 for (let j = 0; j < columns; j++) {
+                for (let j = 0; j < columns; j++) {
                     row.push(Math.floor(Math.random() * 100));
                 }
                 data.push(row);
@@ -157,16 +157,53 @@
             return data;
         }
 
-        // Initialize Handsontable
-        const container = document.getElementById('hot-container');
-        const hot = new Handsontable(container, {
-            data: generateRandomData(100, 3), // 5 rows and 5 columns with random values
-            rowHeaders: true,
-            colHeaders: true,
-            contextMenu: true,
-            licenseKey: 'non-commercial-and-evaluation'
-        });
- 
+        function updateLinePlot() {
+            // Get data from Handsontable
+            const hotData = hot.getData();
+            
+            // Extract the first two columns for the line plot
+            const labels = hotData.map(row => row[0]);
+            const values = hotData.map(row => row[1]);
+
+            // Access the canvas element
+            const canvas = document.getElementById('linePlot');
+            const ctx = canvas.getContext('2d');
+
+            // Create a line chart using Chart.js
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Line Plot',
+                        data: values,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom'
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initial plot when the page loads
+        updateLinePlot();
+
+        // Function to handle the additional form submit
+        function submitAdditionalForm() {
+            // You can add logic to handle the form data here
+            updateLinePlot(); // Update the line plot when the form is submitted
+        }
     </script>
 </body>
 </html>
