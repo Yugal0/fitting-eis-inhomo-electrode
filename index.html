@@ -73,6 +73,16 @@
             width: 100%;
             height: 200px; /* Adjust the height as needed */
         }
+
+        .button-div button {
+           display: block;
+           margin: 10px;
+           padding: 10px 20px;
+           background-color: #007BFF;
+           color: white;
+           border: none;
+           cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -81,6 +91,12 @@
             <h1>Input</h1>
             <!-- Handsontable container -->
             <div id="hot-container"></div>
+        </div>
+        <div class="button-div">
+            <button>Two-step</button>
+            <button>Three-step</button>
+            <button>Linear</button>
+            <button>Inverse Linear</button>
         </div>
         <div class="right-section">
             <h1>Output</h1>
@@ -99,7 +115,7 @@
         // Initialize Handsontable with data
         const container = document.getElementById('hot-container');
         const hot = new Handsontable(container, {
-            data: generateRandomData(100, 2), // 100 rows and 2 columns with random values
+            data: generateRandomData(100, 3), // 100 rows and 2 columns with random values
             rowHeaders: true,
             colHeaders: true,
             contextMenu: true,
@@ -176,3 +192,6 @@
     </script>
 </body>
 </html>
+
+
+
