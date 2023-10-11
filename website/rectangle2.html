@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #container {
+            width: 400px;
+            height: 200px;
+            position: relative;
+        }
+
+        .box {
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            position: absolute;
+        }
+
+        .rect {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            transition: width 0.2s;
+        }
+
+        .divider {
+            width: 2px;
+            height: 100%;
+            background-color: black;
+            cursor: col-resize;
+            position: absolute;
+        }
+
+        #rect1 {
+            background-color: #3498db;
+        }
+
+        #rect2 {
+            background-color: #e74c3c;
+        }
+
+        #rect3 {
+            background-color: #2ecc71;
+        }
+
+        #widthForm {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="box">
+            <div class="rect" id="rect1"></div>
+            <div class="divider" id="divider1"></div>
+            <div class="rect" id="rect2"></div>
+            <div class="divider" id="divider2"></div>
+            <div class="rect" id="rect3"></div>
+        </div>
+    </div>
+    
+    <div id="widthForm">
+        <form id="rectangleWidthsForm">
+            <label for="width1">Width for Rectangle 1 (in %):</label>
+            <input type="number" id="width1" name="width1" min="0" max="100" value="33"><br><br>
+
+            <label for "width2">Width for Rectangle 2 (in %):</label>
+            <input type="number" id="width2" name="width2" min="0" max="100" value="33"><br><br>
+
+            <label for "width3">Width for Rectangle 3 (in %):</label>
+            <input type="number" id="width3" name="width3" min="0" max="100" value="34"><br><br>
+
+            <input type="submit" value="Update Rectangles">
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('rectangleWidthsForm');
+        const rect1 = document.getElementById('rect1');
+        const rect2 = document.getElementById('rect2');
+        const rect3 = document.getElementById('rect3');
+        const divider1 = document.getElementById('divider1');
+        const divider2 = document.getElementById('divider2');
+
+        divider1.addEventListener('mousedown', (e) => {
+            const rect1Width = rect1.clientWidth;
+            const rect2Width = rect2.clientWidth;
+            
+            const startX = e.clientX;
+            let newRect1Width, newRect2Width;
+
+            document.onmousemove = (e) => {
+                const dx = e.clientX - startX;
+                newRect1Width = rect1Width + dx;
+                newRect2Width = rect2Width - dx;
+
+                if (newRect1Width < 0 || newRect2Width < 0) {
+                    return;
+                }
+
+                rect1.style.width = newRect1Width + 'px';
+                rect2.style.width = newRect2Width + 'px';
+            };
+
+            document.onmouseup = () => {
+                document.onmousemove = null;
+                document.onmouseup = null;
+
+                form.querySelector('#width1').value = (newRect1Width / rect1.parentElement.clientWidth) * 100;
+                form.querySelector('#width2').value = (newRect2Width / rect2.parentElement.clientWidth) * 100;
+            };
+        });
+
+        divider2.addEventListener('mousedown', (e) => {
+            const rect2Width = rect2.clientWidth;
+            const rect3Width = rect3.clientWidth;
+
+            const startX = e.clientX;
+            let newRect2Width, newRect3Width;
+
+            document.onmousemove = (e) => {
+                const dx = e.clientX - startX;
+                newRect2Width = rect2Width + dx;
+                newRect3Width = rect3Width - dx;
+
+                if (newRect2Width < 0 || newRect3Width < 0) {
+                    return;
+                }
+
+                rect2.style.width = newRect2Width + 'px';
+                rect3.style.width = newRect3Width + 'px';
+            };
+
+            document.onmouseup = () => {
+                document.onmousemove = null;
+                document.onmouseup = null;
+
+                form.querySelector('#width2').value = (newRect2Width / rect2.parentElement.clientWidth) * 100;
+                form.querySelector('#width3').value = (newRect3Width / rect3.parentElement.clientWidth) * 100;
+            };
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const width1 = parseInt(document.getElementById('width1').value);
+            const width2 = parseInt(document.getElementById('width2').value);
+            const width3 = parseInt(document.getElementById('width3').value);
+
+            if (width1 + width2 + width3 === 100) {
+                rect1.style.width = width1 + '%';
+                rect2.style.width = width2 + '%';
+                rect3.style.width = width3 + '%';
+            } else {
+                alert('The sum of widths must equal 100%.');
+            }
+        });
+    </script>
+</body>
+</html>

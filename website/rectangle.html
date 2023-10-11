@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #container {
+            width: 400px;
+            height: 200px;
+            position: relative;
+        }
+
+        .box {
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            position: absolute;
+        }
+
+        .rect {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            transition: width 0.2s;
+        }
+
+        #rect1 {
+            background: linear-gradient(to left, transparent, #3498db), linear-gradient(to right, #3498db, transparent);
+        }
+
+        #rect2 {
+            background: linear-gradient(to left, transparent, #e74c3c), linear-gradient(to right, #e74c3c, transparent);
+        }
+
+        #rect3 {
+            background: linear-gradient(to left, transparent, #2ecc71), linear-gradient(to right, #2ecc71, transparent);
+        }
+
+        #widthForm {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="box">
+            <div class="rect" id="rect1"></div>
+            <div class="rect" id="rect2"></div>
+            <div class="rect" id="rect3"></div>
+        </div>
+    </div>
+    
+    <div id="widthForm">
+        <form id="rectangleWidthsForm">
+            <label for="width1">Width for Rectangle 1 (in %):</label>
+            <input type="number" id="width1" name="width1" min="0" max="100" value="33"><br><br>
+
+            <label for "width2">Width for Rectangle 2 (in %):</label>
+            <input type="number" id="width2" name="width2" min="0" max="100" value="33"><br><br>
+
+            <label for "width3">Width for Rectangle 3 (in %):</label>
+            <input type="number" id="width3" name="width3" min="0" max="100" value="34"><br><br>
+
+            <input type="submit" value="Update Rectangles">
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('rectangleWidthsForm');
+        const rect1 = document.getElementById('rect1');
+        const rect2 = document.getElementById('rect2');
+        const rect3 = document.getElementById('rect3');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const width1 = parseInt(document.getElementById('width1').value);
+            const width2 = parseInt(document.getElementById('width2').value);
+            const width3 = parseInt(document.getElementById('width3').value);
+
+            if (width1 + width2 + width3 === 100) {
+                rect1.style.width = width1 + '%';
+                rect2.style.width = width2 + '%';
+                rect3.style.width = width3 + '%';
+
+                rect2.style.left = width1 + '%';
+                rect3.style.left = (width1 + width2) + '%';
+            } else {
+                alert('The sum of widths must equal 100%.');
+            }
+        });
+    </script>
+</body>
+</html>

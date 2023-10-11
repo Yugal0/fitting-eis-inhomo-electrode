@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handsontable Example</title>
+    
+    <!-- Include Handsontable CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@9.0.0/dist/handsontable.full.css">
+    <script src="https://cdn.jsdelivr.net/npm/handsontable@9.0.0/dist/handsontable.full.js"></script>
+</head>
+<body>
+    <div id="hot-container"></div>
+    
+    <div id="excel-paste-container" contenteditable="true" style="border: 1px solid #ccc; padding: 10px; margin-top: 20px;">
+        Paste Excel data here...
+    </div>
+
+    <!-- HTML table for displaying pasted data -->
+    <table id="html-table" style="margin-top: 20px;">
+        <tbody></tbody>
+    </table>
+
+    <script>
+        // Generate some random data for the table
+        function generateRandomData(rows, columns) {
+            const data = [];
+            for (let i = 0; i < rows; i++) {
+                const row = [];
+                for (let j = 0; j < columns; j++) {
+                    row.push(Math.floor(Math.random() * 100));
+                }
+                data.push(row);
+            }
+            return data;
+        }
+
+        // Initialize Handsontable
+        const container = document.getElementById('hot-container');
+        const hot = new Handsontable(container, {
+            data: generateRandomData(5, 5), // 5 rows and 5 columns with random values
+            rowHeaders: true,
+            colHeaders: true,
+            contextMenu: true,
+        });
+
+        // Handle pasting Excel data
+        const pasteContainer = document.getElementById('excel-paste-container');
+        const htmlTable = document.getElementById('html-table').querySelector('tbody');
+
+        pasteContainer.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+            const pastedData = text.split('\n').map(row => row.split('\t'));
+
+            // Load data into Handsontable
+            hot.loadData(pastedData);
+
+            // Populate the HTML table
+            htmlTable.innerHTML = ''; // Clear existing data
+            pastedData.forEach(rowData => {
+                const row = document.createElement('tr');
+                rowData.forEach(cellData => {
+                    const cell = document.createElement('td');
+                    cell.textContent = cellData;
+                    row.appendChild(cell);
+                });
+                htmlTable.appendChild(row);
+            });
+        });
+    </script>
+</body>
+</html>
