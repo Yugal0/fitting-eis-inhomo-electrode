@@ -84,7 +84,7 @@
         <div class="right-section">
             <h1>Output</h1>
             <canvas id="linePlot"></canvas>
-            <button onclick="updatePlotButtonClicked()">Update Plot</button>
+            <button onclick="updateLinePlot()">Update Plot</button>
             
             <!-- Second plot for Bessel function -->
             <canvas id="besselPlot"></canvas>
@@ -95,7 +95,7 @@
     <script src="https://cdn.jsdelivr.net/npm/handsontable@9.0.0/dist/handsontable.full.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // JavaScript code to create the line plot
+        // Initialize Handsontable with data
         const container = document.getElementById('hot-container');
         const hot = new Handsontable(container, {
             data: generateRandomData(100, 2), // 100 rows and 2 columns with random values
@@ -104,6 +104,8 @@
             contextMenu: true,
             licenseKey: 'non-commercial-and-evaluation'
         });
+
+        let chart; // Declare the chart variable
 
         function generateRandomData(rows, columns) {
             const data = [];
@@ -129,8 +131,16 @@
             const canvas = document.getElementById('linePlot');
             const ctx = canvas.getContext('2d');
 
-            // Create a line chart using Chart.js
-            new Chart(ctx, {
+            // Clear the previous plot
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Destroy the previous chart instance (if exists)
+            if (chart) {
+                chart.destroy();
+            }
+
+            // Create a new line chart using Chart.js with equal aspect ratio
+            chart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -143,6 +153,7 @@
                     }]
                 },
                 options: {
+                    aspectRatio: 1, // Equal aspect ratio for x and y axes
                     scales: {
                         x: {
                             type: 'linear',
@@ -156,10 +167,11 @@
             });
         }
 
-        // Function to handle the button click to update the plot
-        function updatePlotButtonClicked() {
-            updateLinePlot(); // Update the line plot based on the data in the Handsontable
-        }
+        // Listen for changes in the Handsontable data
+        hot.addHook('afterChange', updateLinePlot);
+        
+        // Initial plot when the page loads
+        updateLinePlot();
     </script>
 </body>
 </html>
