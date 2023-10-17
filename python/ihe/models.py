@@ -1,7 +1,7 @@
 from impedance.models.circuits.elements import element
 import numpy as np
 import scipy
-@element(num_params=5, units=["Ohm", "Ohm", "","F",""],overwrite=True)
+@element(num_params=5, units=["Ohm", "Ohm F", "Ohm F","",""],overwrite=True)
 def TLMtwo(p, f):
    
     omega = 2 * np.pi * np.array(f)
@@ -19,7 +19,7 @@ def TLMtwo(p, f):
 
     return Z
 
-@element(num_params=7, units=["Ohm", "Ohm", "Ohm", "","", "F",""],overwrite=True)
+@element(num_params=7, units=["Ohm", "Ohm F", "Ohm F", "","", "",""],overwrite=True)
 def TLMthree(p, f):
     omega = 2 * np.pi * np.array(f)
     R1, R1Q, R2Q, R3Q, delta1, delta2, alpha = p[0], p[1], p[2],p[3], p[4], p[5], p[6]
@@ -44,7 +44,7 @@ def TLMthree(p, f):
 
     return Z
 
-@element(num_params=4, units=["Ohm", "Ohm", "F", ""],overwrite=True)
+@element(num_params=4, units=["Ohm", "Ohm F", "Ohm F", ""],overwrite=True)
 def TLMlin(p,f):
     omega = 2 * np.pi * np.array(f)
     R1, R1Q, R2Q, alpha = p[0], p[1], p[2], p[3]
@@ -57,7 +57,7 @@ def TLMlin(p,f):
     Z = (2*R1/S)*(scipy.special.iv(1/3, kk1)*scipy.special.iv(2/3, kk2)-scipy.special.iv(-1/3, kk1)*scipy.special.iv(-2/3, kk2))/((scipy.special.iv(-1/3, kk1))*scipy.special.iv(1/3, kk2)-scipy.special.iv(1/3, kk1)*scipy.special.iv(-1/3, kk2))
     return Z
 
-@element(num_params=4, units=["Ohm", "Ohm", "F", ""],overwrite=True)
+@element(num_params=4, units=["Ohm", "Ohm F", "Ohm F", ""],overwrite=True)
 def TLMlinzert(p,f):
     omega = 2 * np.pi * np.array(f)
     R1, R1Q, R2Q, alpha = p[0], p[1], p[2], p[3]
@@ -70,7 +70,7 @@ def TLMlinzert(p,f):
     Z=2*4*R1*(np.exp(4*S)+2*np.exp(2*S)+1)*(np.exp(2*S)+1)*S/((((S**4-2/3*(S**3)+2*S**2-5/2*S+1/8)*eps**2+(4*S**3+S)*eps-4*S**2)*np.exp(2*S)+((-S**4-2/3*(S**3)-2*S**2-5/2*S-1/8)*eps**2+(4*S**3+S)*eps+4*S**2)*np.exp(4*S)+(4*S**2-S*eps+7/8*(eps**2))*np.exp(6*S)-4*S**2-S*eps-7*eps**2*(1/8)))
     return Z
 
-@element(num_params=4, units=["Ohm", "Ohm", "F", ""],overwrite=True)
+@element(num_params=4, units=["Ohm", "Ohm F", "Ohm F", ""],overwrite=True)
 def TLMilin(p,f):
     omega = 2 * np.pi * np.array(f)
     R1, R1Q, R2Q, alpha = p[0], p[1], p[2], p[3]
@@ -86,7 +86,7 @@ def TLMilin(p,f):
     
     return Z
 
-@element(num_params=4, units=["Ohm", "Ohm", "F", ""],overwrite=True)
+@element(num_params=4, units=["Ohm", "Ohm F", "Ohm F", ""],overwrite=True)
 def TLMilinzert(p,f):
     omega = 2 * np.pi * np.array(f)
     R1, R1Q, R2Q, alpha = p[0], p[1], p[2], p[3]
