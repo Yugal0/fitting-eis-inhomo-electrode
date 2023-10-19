@@ -1,6 +1,6 @@
 import numpy as np
 
-def fit_synthetic():
+def fit_synthetic(circuit_simu,params_sim,circuit_fit,initial_gs_fit):
 
 
 
