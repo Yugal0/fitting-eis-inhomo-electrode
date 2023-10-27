@@ -1,4 +1,5 @@
 {
     "svg.preview.background": "white",
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "code-runner.runInTerminal": true
 }
