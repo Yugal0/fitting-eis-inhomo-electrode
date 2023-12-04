@@ -100,3 +100,55 @@ def TLMilinzert(p,f):
     Z=2*R1*4*(np.exp(4*S)+2*np.exp(2*S)+1)*(np.exp(2*S)+1)*S/((((S**4+2*S**3+2*S**2+3/2*S+9/8)*eps**2+(-4*S**3-S)*eps-4*S**2)*np.exp(2*S)+((-S**4+2*S**3-2*S**2+3/2*S-9/8)*eps**2+(-4*S**3-S)*eps+4*S**2)*np.exp(4*S)+(-(1/8)*eps**2+S*eps+4*S**2)*np.exp(6*S)-4*S**2+S*eps+(1/8)*eps**2))
     
     return Z
+
+def profile_plotter(circuit,ax):
+    
+    if(circuit._is_fit()):
+        param=circuit.parameters_
+    else:
+        param=circuit.initial_guess
+    profile=circuit.circuit
+
+    ax1=ax
+    if(profile=="TLMtwo"):
+       R1=param[0]
+       R1Q=param[1]
+       R2Q=param[2]
+       delta1=param[3]
+       Q=R1Q/R1
+       R2=R2Q/Q
+       ax1.plot([0,delta1,delta1,1],[R1,R1,R2,R2],linewidth=2,color="red")
+    
+    if(profile=="TLMthree"):
+       R1=param[0]
+       R1Q=param[1]
+       R2Q=param[2]
+       R3Q=param[3]
+       delta1=param[4]
+       delta2=param[5]
+       Q=R1Q/R1
+       R2=R2Q/Q
+       R3=R3Q/Q
+       ax1.plot([0,delta1,delta1,delta2+delta1,delta2+delta1,1],[R1,R1,R2,R2,R3,R3],linewidth=2,color="blue")
+
+    if(profile=="TLMlin" or profile=="TLMlinzert"):
+       R1=param[0]
+       R1Q=param[1]
+       R2Q=param[2]
+       R2=R1*R2Q/R1Q
+       ax1.plot([0,1],[R1,R2],linewidth=2,color="green")
+
+    if(profile=="TLMilin" or profile=="TLMilinzert"):
+       R1=param[0]
+       R1Q=param[1]
+       R2Q=param[2]
+       R2=R1*R2Q/R1Q
+       ax1.plot([0,1],[R1,R2],linewidth=2,color="blue")
+       def give_ilin_R(r1,r2,delta):
+        return 1/(1/r1+(1/r2-1/r1)*delta)
+       dlt=np.linspace(0,1,50)
+       ax1.plot(dlt,give_ilin_R(R1,R2,dlt),linewidth=2,color="grey")
+
+
+def error_plotter(data1,data2):
+    
