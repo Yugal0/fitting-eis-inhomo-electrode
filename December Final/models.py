@@ -1,6 +1,7 @@
 from impedance.models.circuits.elements import element
 import numpy as np
 import scipy
+import matplotlib.pyplot as plt
 
 @element(num_params=5, units=["Ohm", "Ohm F", "Ohm F","",""],overwrite=True)
 def TLMtwo(p, f):
@@ -150,5 +151,8 @@ def profile_plotter(circuit,ax):
        ax1.plot(dlt,give_ilin_R(R1,R2,dlt),linewidth=2,color="grey")
 
 
-def error_plotter(data1,data2):
-    
+def error_plotter(freq,zdata1,zdata2,ax):
+    err=np.abs(zdata1-zdata2)**2
+    ax.semilogx(freq,err)
+    ax.set_xlabel("freq")
+    ax.set_ylabel("error")
