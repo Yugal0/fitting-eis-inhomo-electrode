@@ -168,4 +168,4 @@ def synthetic_checker(generater_model_name,gen_params=[],detector_model_name,det
     zgen=cgenerater.predict(freq)
     add_noise(zgen,noise)
     cdetector=CustomCircuit(initial_guess=detect_guess,circuit=detector_model_name)
-
+        
