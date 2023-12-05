@@ -158,9 +158,14 @@ def error_plotter(freq,zdata1,zdata2,ax):
     ax.set_xlabel("freq")
     ax.set_ylabel("error")
 
+def add_noise(z,err):
+    #err is the relative SD from mean value
+    z_with_noise=np.random.normal(np.real(z),err*np.abs(np.real(z)))+1j*np.random.normal(np.imag(z),err*np.abs(np.imag(z)))
+    return z_with_noise
 
 def synthetic_checker(generater_model_name,gen_params=[],detector_model_name,detect_guess=[],freq,noise):
     cgenerater=CustomCircuit(initial_guess=gen_params,circuit=generater_model_name)
     zgen=cgenerater.predict(freq)
+    add_noise(zgen,noise)
     cdetector=CustomCircuit(initial_guess=detect_guess,circuit=detector_model_name)
 
