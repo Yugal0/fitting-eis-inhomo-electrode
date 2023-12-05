@@ -1,4 +1,5 @@
 from impedance.models.circuits.elements import element
+from impedance.models.circuits import CustomCircuit
 import numpy as np
 import scipy
 import matplotlib.pyplot as plt
@@ -156,3 +157,10 @@ def error_plotter(freq,zdata1,zdata2,ax):
     ax.semilogx(freq,err)
     ax.set_xlabel("freq")
     ax.set_ylabel("error")
+
+
+def synthetic_checker(generater_model_name,gen_params=[],detector_model_name,detect_guess=[],freq,noise):
+    cgenerater=CustomCircuit(initial_guess=gen_params,circuit=generater_model_name)
+    zgen=cgenerater.predict(freq)
+    cdetector=CustomCircuit(initial_guess=detect_guess,circuit=detector_model_name)
+
