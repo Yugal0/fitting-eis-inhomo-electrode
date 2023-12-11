@@ -4,6 +4,13 @@ import numpy as np
 import scipy
 import matplotlib.pyplot as plt
 
+@element(num_params=2, units=["Ohm", "F"],overwrite=True)
+def TLMuni(p, f):
+   
+    omega = 2 * np.pi * np.array(f)
+    R1, Q = p[0], p[1]
+    Z= 2*np.sqrt(R1/(omega*1j*Q))*(1/(np.tanh(np.sqrt(1j*omega*R1*Q))))
+    return Z
 @element(num_params=5, units=["Ohm", "Ohm F", "Ohm F","",""],overwrite=True)
 def TLMtwo(p, f):
    
@@ -163,9 +170,9 @@ def add_noise(z,err):
     z_with_noise=np.random.normal(np.real(z),err*np.abs(np.real(z)))+1j*np.random.normal(np.imag(z),err*np.abs(np.imag(z)))
     return z_with_noise
 
-def synthetic_checker(generater_model_name,gen_params=[],detector_model_name,detect_guess=[],freq,noise):
-    cgenerater=CustomCircuit(initial_guess=gen_params,circuit=generater_model_name)
-    zgen=cgenerater.predict(freq)
-    add_noise(zgen,noise)
-    cdetector=CustomCircuit(initial_guess=detect_guess,circuit=detector_model_name)
-        
+# def synthetic_checker(generater_model_name,gen_params=[],detector_model_name,detect_guess=[],freq,noise):
+#     cgenerater=CustomCircuit(initial_guess=gen_params,circuit=generater_model_name)
+#     zgen=cgenerater.predict(freq)
+#     add_noise(zgen,noise)
+#     cdetector=CustomCircuit(initial_guess=detect_guess,circuit=detector_model_name)
+
