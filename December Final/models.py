@@ -176,3 +176,15 @@ def add_noise(z,err):
 #     add_noise(zgen,noise)
 #     cdetector=CustomCircuit(initial_guess=detect_guess,circuit=detector_model_name)
 
+def give_weights(z,wt):
+    if (wt=="mod"):
+        return np.concatenate((np.abs(z),np.abs(z)))
+    elif (wt=="prop"):
+        return np.concatenate((np.real(z),np.imag(z)))
+    elif (wt=="" or wt=="unit"):
+        return np.ones(2*len(z))
+    
+def find_index_of_nearest(array, value):
+    array = np.asarray(array)
+    idx = (np.abs(array - value)).argmin()
+    return idx
