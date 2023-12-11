@@ -5,14 +5,14 @@ import scipy
 import matplotlib.pyplot as plt
 
 @element(num_params=2, units=["Ohm", "F"],overwrite=True)
-def TLMuni(p, f):
+def TLMuni(p,f):
    
     omega = 2 * np.pi * np.array(f)
     R1, Q = p[0], p[1]
     Z= 2*np.sqrt(R1/(omega*1j*Q))*(1/(np.tanh(np.sqrt(1j*omega*R1*Q))))
     return Z
 @element(num_params=5, units=["Ohm", "Ohm F", "Ohm F","",""],overwrite=True)
-def TLMtwo(p, f):
+def TLMtwo(p,f):
    
     omega = 2 * np.pi * np.array(f)
     R1, R1Q, R2Q, delta1, alpha = p[0], p[1], p[2], p[3], p[4]
@@ -30,7 +30,7 @@ def TLMtwo(p, f):
     return Z
 
 @element(num_params=7, units=["Ohm", "Ohm F", "Ohm F", "","", "",""],overwrite=True)
-def TLMthree(p, f):
+def TLMthree(p,f):
     omega = 2 * np.pi * np.array(f)
     R1, R1Q, R2Q, R3Q, delta1, delta2, alpha = p[0], p[1], p[2],p[3], p[4], p[5], p[6]
     delta3=1-delta1-delta2
