@@ -110,13 +110,12 @@ def TLMilinzert(p,f):
     
     return Z
 
-def profile_plotter(circuit,ax):
+def profile_plotter(profile,circuit,ax):
     
     if(circuit._is_fit()):
         param=circuit.parameters_
     else:
         param=circuit.initial_guess
-    profile=circuit.circuit
 
     ax1=ax
     if(profile=="TLMtwo"):
