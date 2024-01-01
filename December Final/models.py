@@ -157,6 +157,17 @@ def profile_plotter(profile,circuit,ax):
        dlt=np.linspace(0,1,50)
        ax1.plot(dlt,give_ilin_R(R1,R2,dlt),linewidth=2,color="grey")
 
+    if(profile=="arbitau"):
+       R1=param[0]
+       R1Q=param[1]
+       R2Q=param[2]
+       R2=R1*R2Q/R1Q
+       ax1.plot([0,1],[R1,R2],linewidth=2,color="blue")
+       def give_ilin_R(r1,r2,delta):
+        return 1/(1/r1+(1/r2-1/r1)*delta)
+       dlt=np.linspace(0,1,50)
+       ax1.plot(dlt,give_ilin_R(R1,R2,dlt),linewidth=2,color="grey")
+
 
 def error_plotter(freq,zdata1,zdata2,ax):
     err=np.abs(zdata1-zdata2)**2
