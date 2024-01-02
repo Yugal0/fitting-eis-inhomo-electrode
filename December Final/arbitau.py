@@ -16,7 +16,7 @@ def give_z_for_arbitary_tau(tau,freq_list,ax,name):
     x=np.linspace(0,1,1000)
     y=np.zeros((4,x.size))
 
-    Z_list=np.zeros((np.size(freq_list),1),dtype=complex)
+    Z_list=np.zeros((np.size(freq_list)),dtype=complex)
     ii=0
     for f in freq_list:
         w=2*np.pi*f
