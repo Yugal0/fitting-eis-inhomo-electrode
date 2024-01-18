@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSV File Upload and Display</title>
+</head>
+<body>
+  <input type="file" id="csvFileInput" accept=".csv" />
+  <button onclick="handleFile()">Upload and Display</button>
+  <div id="csvContent"></div>
+
+  <script>
+    let columnData = {
+      column1: [],
+      column2: [],
+      column3: []
+    };
+
+    function handleFile() {
+      const fileInput = document.getElementById('csvFileInput');
+      const csvContentDiv = document.getElementById('csvContent');
+
+      const file = fileInput.files[0];
+      if (!file) {
+        alert('Please select a CSV file');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const csvContent = e.target.result;
+        extractCSVData(csvContent);
+        displayCSVContent(csvContent);
+      };
+
+      reader.readAsText(file);
+    }
+
+    function extractCSVData(csvContent) {
+      const rows = csvContent.split('\n');
+
+      rows.forEach(row => {
+        const columns = row.split(',');
+        if (columns.length >= 3) {
+          columnData.column1.push(columns[0].trim());
+          columnData.column2.push(columns[1].trim());
+          columnData.column3.push(columns[2].trim());
+        }
+      });
+    }
+
+    function displayCSVContent(csvContent) {
+      const rows = csvContent.split('\n');
+      const table = document.createElement('table');
+
+      rows.forEach(row => {
+        const columns = row.split(',');
+        const tr = document.createElement('tr');
+
+        columns.forEach(column => {
+          const td = document.createElement('td');
+          td.textContent = column.trim();
+          tr.appendChild(td);
+        });
+
+        table.appendChild(tr);
+      });
+
+      const csvContentDiv = document.getElementById('csvContent');
+      csvContentDiv.innerHTML = '';
+      csvContentDiv.appendChild(table);
+
+      console.log('Column 1:', columnData.column1);
+      console.log('Column 2:', columnData.column2);
+      console.log('Column 3:', columnData.column3);
+    }
+  </script>
+</body>
+</html>
