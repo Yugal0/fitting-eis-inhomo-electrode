@@ -11,6 +11,7 @@ def TLMuni(p,f):
     R1, Q = p[0], p[1]
     Z= 2*np.sqrt(R1/(omega*1j*Q))*(1/(np.tanh(np.sqrt(1j*omega*R1*Q))))
     return Z
+
 @element(num_params=5, units=["Ohm", "Ohm F", "Ohm F","",""],overwrite=True)
 def TLMtwo(p,f):
    
