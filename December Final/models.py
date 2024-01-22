@@ -4,12 +4,12 @@ import numpy as np
 import scipy
 import matplotlib.pyplot as plt
 
-@element(num_params=2, units=["Ohm", "F"],overwrite=True)
+@element(num_params=3, units=["Ohm", "F"],overwrite=True)
 def TLMuni(p,f):
    
     omega = 2 * np.pi * np.array(f)
-    R1, Q = p[0], p[1]
-    Z= 2*np.sqrt(R1/(omega*1j*Q))*(1/(np.tanh(np.sqrt(1j*omega*R1*Q))))
+    R1, Q, alpha = p[0], p[1], p[2]
+    Z= 2*np.sqrt(R1/((omega*1j)**alpha*Q))*(1/(np.tanh(np.sqrt((1j*omega)**alpha*R1*Q))))
     return Z
 
 @element(num_params=5, units=["Ohm", "Ohm F", "Ohm F","",""],overwrite=True)
