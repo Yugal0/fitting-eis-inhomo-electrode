@@ -4,7 +4,7 @@ import numpy as np
 import scipy
 import matplotlib.pyplot as plt
 
-@element(num_params=3, units=["Ohm", "F"],overwrite=True)
+@element(num_params=3, units=["Ohm", "F", ""],overwrite=True)
 def TLMuni(p,f):
     omega = 2 * np.pi * np.array(f)
     R1, Q, alpha = p[0], p[1], p[2]
